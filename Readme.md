@@ -1,0 +1,5 @@
+When VMFS automatic UNMAP became a thing with VMFS6, it did work well but with caveats. Some SANs have quite large allocation blocks, in this case Hitachi has 42MB.
+
+So when thin VMDK shrunk slowly in 1MB increments, it did not properly reclaim space as you had to free the whole 42MB block at once. Over time this caused quite a lot of dead space on SAN (IIRC ~10% difference between VMFS free and LUN host written space). Even Hitachi lying about having 256K allocation would not fix it (when automatic UNMAP required <=1MB UNMAP blocks).
+
+So I wrote this snippet (plus a function I took from referenced link) to manually UNMAP one datastore/LUN per day (too many UNMAPs would kill array performance). And voila, you have more free space on SAN. Might still be the case on arrays that have internal allocation block over 1MB. Dothill based stuff comes to mind (HPE MSA, Dell MD), IIRC they had 4MB block.

@@ -1,0 +1,3 @@
+﻿$vCenterHost = ''
+$vCenterUser = ''
+$vCenterPassPT = ''
