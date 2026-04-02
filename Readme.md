@@ -16,7 +16,7 @@ Imagine a case of deleting a single 4k file. As block device has larger granular
 
 In case you deleted a 1M file (with correct alignement!), you just get thin space back immediately.
 
-Larger block size and alignement requirements are also the reason why defragmentation is sometimes pretty effective on thin provisioned disks - you can return the thin allocated space that would otherwise be stuck.
+Larger block size and alignment requirements are also the reason why defragmentation is sometimes pretty effective on thin provisioned disks - you can return the thin allocated space that would otherwise be stuck.
 
 Note that on Linux, LVM-LUKS-dmcrypt or whatever volume manager of filter in path you use, must also support passing on discards. So make sure that your config there as issue_discards or allow_discards or anything similar set to 1/true.
 
