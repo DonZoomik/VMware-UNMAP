@@ -8,7 +8,7 @@ So I wrote this snippet (plus a function I took from referenced link) to manuall
 
 # In-VM Linux Reclaim
 
-The second script is oneliner to add discard flag to each supported filesystem in fstab. Note that even swap is supported for defrag. It also recreates/enables fstrim timer with more randomless to spread out the load of batch discards.
+The second script is oneliner to add discard flag to each supported filesystem in fstab. Note that even swap is supported for defrag. It also recreates/enables fstrim timer with more randomless to spread out the load of batch discards. I think you could effectively run it on every boot/shutdown. Or maybe attach it to fstab with inotify so you would always get discard flag applied, before mounting the filesystem.
 
 Note the for efficient operation, you need both discard and timer. On thin filesystems (think virtualization or storage arrays), your block device has larger UNMAP/TRIM/Deallocate granularity and alignment (for example 1M) than filesystem (usually 4k).
 
@@ -17,3 +17,7 @@ Imagine a case of deleting a single 4k file. As block device has larger granular
 In case you deleted a 1M file (with correct alignement!), you just get thin space back immediately.
 
 Larger block size and alignement requirements are also the reason why defragmentation is sometimes pretty effective on thin provisioned disks - you can return the thin allocated space that would otherwise be stuck.
+
+Note that on Linux, LVM-LUKS-dmcrypt or whatever volume manager of filter in path you use, must also support passing on discards. So make sure that your config there as issue_discards or allow_discards or anything similar set to 1/true.
+
+Also note that effectively (not entirely true, but true enough), thin provisioned property of disks is only discovered on VM boot. So if you had thick VM disk on VM boot and converted it to thin, reboot your VM or discards will not work (especially true with LVM).
