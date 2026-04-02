@@ -18,6 +18,6 @@ In case you deleted a 1M file (with correct alignment!), you just get thin space
 
 Larger block size and alignment requirements are also the reason why defragmentation is sometimes pretty effective on thin provisioned disks - you can return the thin allocated space that would otherwise be stuck.
 
-Note that on Linux, LVM-LUKS-dmcrypt or whatever volume manager of filter in path you use, must also support passing on discards. So make sure that your config there as issue_discards or allow_discards or anything similar set to 1/true.
+Note that on Linux, LVM-LUKS-dmcrypt or whatever volume manager of filter in path you use, must also support passing on discards. So make sure that your config there has issue_discards or allow_discards or anything similar set to 1/true.
 
 Also note that effectively (not entirely true, but true enough), thin provisioned property of disks is only discovered on VM boot. So if you had thick VM disk on VM boot and converted it to thin, reboot your VM or discards will not work (especially true with LVM).
