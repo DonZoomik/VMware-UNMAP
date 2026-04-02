@@ -8,7 +8,7 @@ So I wrote this snippet (plus a function I took from referenced link) to manuall
 
 # In-VM Linux Reclaim
 
-The second script is oneliner to add discard flag to each supported filesystem in fstab. Note that even swap is supported for defrag. It also recreates/enables fstrim timer with more randomless to spread out the load of batch discards. I think you could effectively run it on every boot/shutdown. Or maybe attach it to fstab with inotify so you would always get discard flag applied, before mounting the filesystem.
+The second script is oneliner to add discard flag to each supported filesystem in fstab. Note that even swap is supported for discard. It also recreates/enables fstrim timer with more randomless to spread out the load of batch discards. I think you could effectively run it on every boot/shutdown. Or maybe attach it to fstab with inotify so you would always get discard flag applied, before mounting the filesystem.
 
 Note the for efficient operation, you need both discard and timer. On thin filesystems (think virtualization or storage arrays), your block device has larger UNMAP/TRIM/Deallocate granularity and alignment (for example 1M) than filesystem (usually 4k).
 
