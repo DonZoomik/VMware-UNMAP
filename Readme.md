@@ -14,7 +14,7 @@ Note the for efficient operation, you need both discard and timer. On thin files
 
 Imagine a case of deleting a single 4k file. As block device has larger granularity and alignment, nothing is done, effectively leaving lost thin space. However, when over week you have deleted enough 4k files to free the whole 1M block, timer can still free it.
 
-In case you deleted a 1M file (with correct alignement!), you just get thin space back immediately.
+In case you deleted a 1M file (with correct alignment!), you just get thin space back immediately.
 
 Larger block size and alignment requirements are also the reason why defragmentation is sometimes pretty effective on thin provisioned disks - you can return the thin allocated space that would otherwise be stuck.
 
