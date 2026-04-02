@@ -1,4 +1,4 @@
-#VMFS Reclaim
+# VMFS Reclaim
 
 When VMFS automatic UNMAP became a thing with VMFS6, it did work well but with caveats. Some SANs have quite large allocation blocks, in this case Hitachi has 42MB.
 
@@ -6,7 +6,7 @@ So when thin VMDK shrunk slowly in 1MB increments, it did not properly reclaim s
 
 So I wrote this snippet (plus a function I took from referenced link) to manually UNMAP one datastore/LUN per day (too many UNMAPs would kill array performance). And voila, you have more free space on SAN. Might still be the case on arrays that have internal allocation block over 1MB. Dothill based stuff comes to mind (HPE MSA, Dell MD), IIRC they had 4MB block.
 
-#In-VM Linux Reclaim
+# In-VM Linux Reclaim
 
 The second script is oneliner to add discard flag to each supported filesystem in fstab. Note that even swap is supported for defrag. It also recreates/enables fstrim timer with more randomless to spread out the load of batch discards.
 
